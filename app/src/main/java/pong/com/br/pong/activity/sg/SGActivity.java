@@ -1,4 +1,4 @@
-package pong.com.br.pong;
+package pong.com.br.pong.activity.sg;
 
 import android.annotation.SuppressLint;
 import android.content.pm.ActivityInfo;
@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import pong.com.br.pong.model.sg.SGPreferences;
+
 public class SGActivity extends Activity {
 
     public static final String TAG = "SimpleGameEngine";
+    public SGPreferences mPreferences;
 
     public enum SGOrientation { LANDSCAPE, PORTRAIT }
 
@@ -50,6 +53,7 @@ public class SGActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPreferences = new SGPreferences(this);
     }
 
     @Override
@@ -86,5 +90,9 @@ public class SGActivity extends Activity {
     protected void onStop() {
         super.onStop();
         Log.v(TAG, " onStop() called.");
+    }
+
+    public SGPreferences getmPreferences() {
+        return mPreferences;
     }
 }

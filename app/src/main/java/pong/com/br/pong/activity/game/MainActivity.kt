@@ -1,7 +1,8 @@
-package pong.com.br.pong
+package pong.com.br.pong.activity.game
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import pong.com.br.pong.R
 
 class MainActivity : AppCompatActivity() {
 
