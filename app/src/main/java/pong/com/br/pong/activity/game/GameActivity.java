@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import pong.com.br.pong.activity.sg.SGActivity;
+import pong.com.br.pong.model.game.GameView;
 import pong.com.br.pong.model.sg.SGPreferences;
 
 public class GameActivity extends SGActivity {
