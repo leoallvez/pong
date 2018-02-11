@@ -22,13 +22,11 @@ public class SGView extends View {
     @Override
     public void onDraw(Canvas canvas){
         canvas.drawColor(Color.LTGRAY);
-
         step(canvas);
+        invalidate();
     }
 
-    public void step(Canvas canvas){
-
-    }
+    public void step(Canvas canvas){}
 
     @Override
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
@@ -41,8 +39,9 @@ public class SGView extends View {
         }
     }
 
-    protected void setup() {
+    protected void setup() {}
 
+    public Point getDimensions() {
+        return mDimension;
     }
-
 }
