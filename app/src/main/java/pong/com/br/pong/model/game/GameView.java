@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
-import android.graphics.Rect;
+import android.graphics.RectF;
 
 import pong.com.br.pong.model.sg.SGView;
 
@@ -17,17 +17,18 @@ import pong.com.br.pong.model.sg.SGView;
 public class GameView extends SGView{
 
     private final static int BALL_SIZE = 16;
-    private final static  int BALL_SPEED = 2;
+    private final static  int BALL_SPEED = 120;
     private final static int DISTANCE_FROM_EDGE = 16;
     private final static int PADDLE_HEIGHT = 92;
     private final static int PADDLE_WIDTH = 23;
-    private final static int OPPONENT_SPEED = 2;
+    private final static int OPPONENT_SPEED = 120;
 
-    private Rect mBallDestination = new Rect();
+    private RectF mBallDestination = new RectF();
+    private RectF mOpponentDestination = new RectF();
+    private RectF mPlayerDestination = new RectF();
+
     private boolean mBallMoveRight = true;
-    private Rect mOpponentDestination = new Rect();
     private boolean mOpponentMoveDown = true;
-    private Rect mPlayerDestination = new Rect();
 
     private Paint mTempPaint = new Paint();
     public GameView(Context context){
@@ -35,9 +36,9 @@ public class GameView extends SGView{
     }
 
     @Override
-    public void step(Canvas canvas) {
-        moveBall();
-        moveOppnoent();
+    public void step(Canvas canvas, float elapsedTimeInSeconds) {
+        moveBall(elapsedTimeInSeconds);
+        moveOppnoent(elapsedTimeInSeconds);
         
         mTempPaint.setColor(Color.RED);
 
@@ -48,7 +49,6 @@ public class GameView extends SGView{
 
     @Override
     public void setup (){
-
 
         Point viewDimensions = getDimensions();
         Point viewCenter = new Point(viewDimensions.x / 2, viewDimensions.y /2);
@@ -75,12 +75,13 @@ public class GameView extends SGView{
         );
     }
 
-    private void moveBall() {
+    private void moveBall(float elapsedTimeInSeconds) {
         Point viewDimesions = getDimensions();
 
         if(mBallMoveRight) {
-            mBallDestination.left += BALL_SPEED;
-            mBallDestination.right += BALL_SPEED;
+
+            mBallDestination.left += BALL_SPEED * elapsedTimeInSeconds;
+            mBallDestination.right += BALL_SPEED * elapsedTimeInSeconds;
 
             if(mBallDestination.right >= viewDimesions.x) {
                 mBallDestination.left = viewDimesions.x - BALL_SIZE;
@@ -89,8 +90,8 @@ public class GameView extends SGView{
             }
         }else{
 
-            mBallDestination.left -= BALL_SPEED;
-            mBallDestination.right -= BALL_SPEED;
+            mBallDestination.left -= BALL_SPEED * elapsedTimeInSeconds;
+            mBallDestination.right -= BALL_SPEED * elapsedTimeInSeconds;
 
             if(mBallDestination.left < 0) {
                 mBallDestination.left = 0;
@@ -101,12 +102,13 @@ public class GameView extends SGView{
         }
     }
 
-    private void moveOppnoent() {
+    private void moveOppnoent(float elapsedTimeInSeconds) {
         Point viewDimensions = getDimensions();
 
         if(mOpponentMoveDown) {
-            mOpponentDestination.top += OPPONENT_SPEED;
-            mOpponentDestination.bottom += OPPONENT_SPEED;
+
+            mOpponentDestination.top += OPPONENT_SPEED * elapsedTimeInSeconds;
+            mOpponentDestination.bottom += OPPONENT_SPEED * elapsedTimeInSeconds;
 
             if(mOpponentDestination.bottom >= viewDimensions.y){
                 mOpponentDestination.top = viewDimensions.y - PADDLE_HEIGHT;
@@ -116,8 +118,8 @@ public class GameView extends SGView{
             }
         }else{
 
-            mOpponentDestination.top -= OPPONENT_SPEED;
-            mOpponentDestination.bottom -= OPPONENT_SPEED;
+            mOpponentDestination.top -= OPPONENT_SPEED * elapsedTimeInSeconds;
+            mOpponentDestination.bottom -= OPPONENT_SPEED * elapsedTimeInSeconds;
 
             if(mOpponentDestination.top < 0){
 

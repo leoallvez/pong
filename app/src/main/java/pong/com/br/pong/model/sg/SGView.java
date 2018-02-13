@@ -12,6 +12,7 @@ import android.view.View;
 
 public class SGView extends View {
 
+    private SGStepwach mStepwach = new SGStepwach();
     private Point mDimension = new Point();
     private boolean mHasStarted;
 
@@ -22,11 +23,11 @@ public class SGView extends View {
     @Override
     public void onDraw(Canvas canvas){
         canvas.drawColor(Color.LTGRAY);
-        step(canvas);
+        step(canvas, mStepwach.tick());
         invalidate();
     }
 
-    public void step(Canvas canvas){}
+    public void step(Canvas canvas, float elapsedTimeInSeconds){}
 
     @Override
     protected void onSizeChanged(int width, int height, int oldWidth, int oldHeight) {
