@@ -7,6 +7,9 @@ import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.RectF;
 
+import pong.com.br.pong.R;
+import pong.com.br.pong.model.sg.SGImage;
+import pong.com.br.pong.model.sg.SGImageFactory;
 import pong.com.br.pong.model.sg.SGView;
 
 
@@ -22,6 +25,10 @@ public class GameView extends SGView{
     private final static int PADDLE_HEIGHT = 92;
     private final static int PADDLE_WIDTH = 23;
     private final static int OPPONENT_SPEED = 120;
+
+    private SGImage mBallImage;
+    private SGImage mOpponentImage;
+    private SGImage mPlayerImage;
 
     private RectF mBallDestination = new RectF();
     private RectF mOpponentDestination = new RectF();
@@ -49,6 +56,12 @@ public class GameView extends SGView{
 
     @Override
     public void setup (){
+
+        SGImageFactory imageFactory = getImageFactory();
+
+        mBallImage = imageFactory.createImage(R.drawable.ball);
+        mPlayerImage = imageFactory.createImage("player.png");
+        mOpponentImage = imageFactory.createImage("opponent.png");
 
         Point viewDimensions = getDimensions();
         Point viewCenter = new Point(viewDimensions.x / 2, viewDimensions.y /2);
