@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.RectF;
 
 import pong.com.br.pong.R;
@@ -30,6 +31,8 @@ public class GameView extends SGView{
     private SGImage mOpponentImage;
     private SGImage mPlayerImage;
 
+    private Rect mTempImageSource = new Rect();
+
     private RectF mBallDestination = new RectF();
     private RectF mOpponentDestination = new RectF();
     private RectF mPlayerDestination = new RectF();
@@ -49,9 +52,40 @@ public class GameView extends SGView{
         
         mTempPaint.setColor(Color.RED);
 
-        canvas.drawRect(mPlayerDestination, mTempPaint);
-        canvas.drawRect(mBallDestination, mTempPaint);
-        canvas.drawRect(mOpponentDestination, mTempPaint);
+        mTempImageSource.set(0,0, PADDLE_WIDTH, PADDLE_HEIGHT);
+
+        if(mPlayerImage != null) {
+            canvas.drawBitmap(
+                    mPlayerImage.getBitmap(),
+                    mTempImageSource,
+                    mPlayerDestination,
+                    mTempPaint
+                );
+        }else{
+            canvas.drawRect(mPlayerDestination, mTempPaint);
+        }
+
+        if(mOpponentImage != null) {
+            canvas.drawBitmap(
+                    mOpponentImage.getBitmap(),
+                    mTempImageSource,
+                    mOpponentDestination,
+                    mTempPaint
+            );
+        }else{
+            canvas.drawRect(mOpponentDestination, mTempPaint);
+        }
+
+        if(mBallImage != null) {
+            canvas.drawBitmap(
+                    mBallImage.getBitmap(),
+                    mTempImageSource,
+                    mBallDestination,
+                    mTempPaint
+            );
+        }else{
+            canvas.drawRect(mBallDestination, mTempPaint);
+        }
     }
 
     @Override
