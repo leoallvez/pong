@@ -2,7 +2,6 @@ package pong.com.br.pong.model.sg;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.view.View;
 
@@ -12,6 +11,7 @@ import android.view.View;
 
 public class SGView extends View {
 
+    private SGRenderer mRenderer;
     private SGStepwach mStepwach = new SGStepwach();
     private SGImageFactory mImageFactory;
     private Point mDimension = new Point();
@@ -20,12 +20,14 @@ public class SGView extends View {
     public SGView(Context context){
         super(context);
         mImageFactory = new SGImageFactory(context);
+        mRenderer = new SGRenderer();
     }
 
     @Override
     public void onDraw(Canvas canvas){
-        canvas.drawColor(Color.LTGRAY);
+
         step(canvas, mStepwach.tick());
+
         invalidate();
     }
 
@@ -50,5 +52,9 @@ public class SGView extends View {
 
     public SGImageFactory getImageFactory() {
         return mImageFactory;
+    }
+
+    public SGRenderer getRenderer() {
+        return mRenderer;
     }
 }

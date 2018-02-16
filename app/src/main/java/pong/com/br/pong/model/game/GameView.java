@@ -11,6 +11,7 @@ import android.graphics.RectF;
 import pong.com.br.pong.R;
 import pong.com.br.pong.model.sg.SGImage;
 import pong.com.br.pong.model.sg.SGImageFactory;
+import pong.com.br.pong.model.sg.SGRenderer;
 import pong.com.br.pong.model.sg.SGView;
 
 
@@ -49,43 +50,21 @@ public class GameView extends SGView{
     public void step(Canvas canvas, float elapsedTimeInSeconds) {
         moveBall(elapsedTimeInSeconds);
         moveOppnoent(elapsedTimeInSeconds);
-        
-        mTempPaint.setColor(Color.RED);
 
-        mTempImageSource.set(0,0, PADDLE_WIDTH, PADDLE_HEIGHT);
+        SGRenderer renderer = getRenderer();
 
-        if(mPlayerImage != null) {
-            canvas.drawBitmap(
-                    mPlayerImage.getBitmap(),
-                    mTempImageSource,
-                    mPlayerDestination,
-                    mTempPaint
-                );
-        }else{
-            canvas.drawRect(mPlayerDestination, mTempPaint);
-        }
+        renderer.beginDrawing(canvas, Color.BLACK);
 
-        if(mOpponentImage != null) {
-            canvas.drawBitmap(
-                    mOpponentImage.getBitmap(),
-                    mTempImageSource,
-                    mOpponentDestination,
-                    mTempPaint
-            );
-        }else{
-            canvas.drawRect(mOpponentDestination, mTempPaint);
-        }
+        mTempImageSource.set(0, 0, BALL_SIZE, BALL_SIZE);
+        renderer.drawImage(mBallImage, mTempImageSource, mBallDestination);
 
-        if(mBallImage != null) {
-            canvas.drawBitmap(
-                    mBallImage.getBitmap(),
-                    mTempImageSource,
-                    mBallDestination,
-                    mTempPaint
-            );
-        }else{
-            canvas.drawRect(mBallDestination, mTempPaint);
-        }
+        mTempImageSource.set(0, 0, PADDLE_WIDTH, PADDLE_HEIGHT);
+        renderer.drawImage(mPlayerImage, mTempImageSource, mPlayerDestination);
+
+        mTempImageSource.set(0, 0, PADDLE_WIDTH, PADDLE_HEIGHT);
+        renderer.drawImage(mOpponentImage, mTempImageSource, mOpponentDestination);
+
+        renderer.endDrawing();
     }
 
     @Override
